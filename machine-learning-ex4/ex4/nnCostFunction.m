@@ -61,26 +61,29 @@ Theta2_grad = zeros(size(Theta2));
 %               the regularization separately and then add them to Theta1_grad
 %               and Theta2_grad from Part 2.
 %
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 % -------------------------------------------------------------
+% Part 1
+a1 = [ones(m, 1), X];  % size(a1) = 5000 * 401
+
+z2 = a1 * Theta1';  % size(Theta1) = 25 * 401, size(z2 = 5000 * 25)
+a2 = sigmoid(z2); % size(a2) = 5000 * 25
+a2 = [ones(size(a2, 1), 1) a2];  % size(a2) = 5000 * 26
+
+z3 = a2 * Theta2'; % size(a2) = 5000 * 26, size(Theta2) = 10 * 26, size(z3) = 5000 * 10
+a3 = sigmoid(z3);
+hThetaX = a3;  % size(hThetaX) = size(a3) = 50000 * 10
+
+term1 = -y .* log(hThetaX);
+term2 = (1-y) .* log(1 - hThetaX);
+
+J = (1/m) * sum(term1 - term2);
+
+regulator = lambda / ( 2 * m) * (sum(sum(Theta1(:, 2:end).^2)) + sum(sum(Theta2(:, 2:end).^2)));
+
+J = J + regulator;
+% Part 2
+
+% Part 3
 
 % =========================================================================
 
